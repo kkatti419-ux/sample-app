@@ -2,6 +2,15 @@ plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
     alias(libs.plugins.kotlin.compose)
+//    // ✅ ADD THIS
+    kotlin("kapt")
+//    // ✅ ADD THIS (Hilt plugin)
+    id("com.google.dagger.hilt.android")
+
+//    alias(libs.plugins.ksp)
+//    alias(libs.plugins.hilt)
+
+
 }
 
 android {
@@ -57,4 +66,32 @@ dependencies {
     androidTestImplementation(libs.androidx.compose.ui.test.junit4)
     debugImplementation(libs.androidx.compose.ui.tooling)
     debugImplementation(libs.androidx.compose.ui.test.manifest)
+    implementation(libs.coil.compose)
+    implementation(libs.androidx.navigation.compose)
+
+    implementation("com.google.dagger:hilt-android:2.51")
+    kapt("com.google.dagger:hilt-compiler:2.51")
+
+    implementation("androidx.hilt:hilt-navigation-compose:1.2.0")
+
+
+    implementation("com.squareup.retrofit2:retrofit:2.9.0")
+
+    implementation("com.squareup.retrofit2:converter-moshi:2.9.0")
+    implementation("com.squareup.moshi:moshi-kotlin:1.15.0") // 🔥 REQUIRED
+
+//    ksp("com.squareup.moshi:moshi-kotlin-codegen:1.15.0") // if using KSP
+
+    implementation("com.squareup.okhttp3:okhttp:4.11.0")
+    implementation("com.squareup.okhttp3:logging-interceptor:4.11.0")
+    // Hilt (DI)
+    // Gson Converter (FIXES GsonConverterFactory error)
+//    implementation("com.squareup.retrofit2:converter-gson:2.9.0")
+//    implementation("com.google.dagger:hilt-android:2.47")
+//    ksp("com.google.dagger:hilt-android-compiler:2.47")
+//    implementation("androidx.hilt:hilt-navigation-compose:1.1.0")
+}
+
+kapt {
+    correctErrorTypes = true
 }
