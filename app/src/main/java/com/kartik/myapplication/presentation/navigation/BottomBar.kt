@@ -1,6 +1,7 @@
 package com.kartik.myapplication.presentation.navigation
 
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Favorite
 import androidx.compose.material.icons.filled.Home
 import androidx.compose.material.icons.filled.Person
 import androidx.compose.material3.Icon
@@ -18,7 +19,8 @@ fun BottomBar(navController: NavController) {
         Screen.Home,
         Screen.Profile,
         Screen.Dashboard,
-        Screen.Setting
+        Screen.Favorites,
+        Screen.Setting,
     )
 
     NavigationBar {
@@ -40,6 +42,7 @@ fun BottomBar(navController: NavController) {
                         Screen.Dashboard -> Icon(Icons.Default.Person, contentDescription = null)
                         Screen.Home -> Icon(Icons.Default.Home, contentDescription = null)
                         Screen.Profile -> Icon(Icons.Default.Person, contentDescription = null)
+                        Screen.Favorites -> Icon(Icons.Filled.Favorite, contentDescription = null)
                         Screen.Setting -> Icon(Icons.Default.Person, contentDescription = null)
                         Screen.ProductDetail -> Icon(Icons.Default.Person, contentDescription = null)
                     }

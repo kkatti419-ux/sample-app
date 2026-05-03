@@ -12,6 +12,7 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
+import com.kartik.myapplication.presentation.product.FavoritesScreen
 import com.kartik.myapplication.presentation.product.ProductDetailScreen
 import com.kartik.myapplication.presentation.product.Products
 import com.kartik.myapplication.presentation.profile.ProfileScreen
@@ -22,8 +23,13 @@ fun MainScreen() {
     val navController = rememberNavController()
     val navBackStackEntry by navController.currentBackStackEntryAsState()
     val currentRoute = navBackStackEntry?.destination?.route
-    val bottomBarRoutes =
-        listOf(Screen.Home.route, Screen.Profile.route, Screen.Dashboard.route, Screen.Setting.route)
+    val bottomBarRoutes = listOf(
+        Screen.Home.route,
+        Screen.Profile.route,
+        Screen.Dashboard.route,
+        Screen.Favorites.route,
+        Screen.Setting.route,
+    )
     val showBottomBar = currentRoute in bottomBarRoutes
 
     Scaffold(
@@ -41,6 +47,9 @@ fun MainScreen() {
         ) {
             composable(Screen.Dashboard.route) {
                 Products(navController)
+            }
+            composable(Screen.Favorites.route) {
+                FavoritesScreen(navController)
             }
             composable(Screen.Setting.route) {
                 Text("Profile Screen")

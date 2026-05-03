@@ -11,15 +11,23 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
-import androidx.compose.runtime.Composable
-import androidx.compose.ui.Modifier
-import com.kartik.myapplication.presentation.profile.InfoText
-import androidx.compose.foundation.lazy.grid.items   // ✅ THIS ONE
+import androidx.compose.foundation.lazy.grid.items
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Favorite
+import androidx.compose.material.icons.filled.FavoriteBorder
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.Text
+import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
+import androidx.compose.ui.Alignment
+import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.unit.dp
+import com.kartik.myapplication.presentation.profile.InfoText
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import coil.compose.AsyncImage
@@ -41,7 +49,7 @@ fun Products(navController: NavController,viewModel: ProductViewModel= hiltViewM
 
 
     val uiState = viewModel.uiState.collectAsState().value
-
+    val favoriteIds by viewModel.favoriteIds.collectAsState()
 
     when (uiState) {
         is ProductUiState.Idle -> {
@@ -61,9 +69,11 @@ fun Products(navController: NavController,viewModel: ProductViewModel= hiltViewM
                 horizontalArrangement = Arrangement.spacedBy(12.dp)  // ✅ horizontal gap
 
             ) {
-                items(uiState.data.products) { item ->
+                items(uiState.data.products, key = { it.id }) { item ->
                     ProductCard(
                         product = item,
+                        isFavorite = favoriteIds.contains(item.id),
+                        onFavoriteClick = { viewModel.toggleFavorite(item) },
                         onClick = {
                             navController.navigate(Screen.ProductDetail.createRoute(item.id))
                         },
@@ -115,29 +125,46 @@ fun Products(navController: NavController,viewModel: ProductViewModel= hiltViewM
 
 
 @Composable
-fun ProductCard(product: Product, onClick: () -> Unit) {
-
+fun ProductCard(
+    product: Product,
+    isFavorite: Boolean,
+    onFavoriteClick: () -> Unit,
+    onClick: () -> Unit,
+) {
     Box(
         Modifier
             .padding(5.dp)
             .fillMaxWidth()
-            .background(Color.LightGray)
-            .clickable(onClick = onClick),
+            .background(Color.LightGray),
     ) {
-        Column {
-
+        Column(
+            Modifier
+                .fillMaxWidth()
+                .clickable(onClick = onClick),
+        ) {
             AsyncImage(
                 model = product.thumbnail,
                 contentDescription = product.title,
                 contentScale = ContentScale.Crop,
                 modifier = Modifier
                     .fillMaxWidth()
-                    .height(150.dp)
+                    .height(150.dp),
             )
 
             InfoText("Title", product.title)
             InfoText("Price", "₹${product.price}")
             InfoText("Rating", product.rating.toString())
+        }
+
+        IconButton(
+            modifier = Modifier
+                .align(Alignment.TopEnd)
+                .padding(4.dp),
+            onClick = onFavoriteClick,
+        ) {
+            val heartIcon: ImageVector =
+                if (isFavorite) Icons.Filled.Favorite else Icons.Filled.FavoriteBorder
+            Icon(imageVector = heartIcon, contentDescription = "Favorite", tint = Color.Red)
         }
     }
 }

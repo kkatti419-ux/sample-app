@@ -2,6 +2,7 @@ package com.kartik.myapplication.di
 
 import android.content.Context
 import androidx.room.Room
+import com.kartik.myapplication.data.local.dao.FavoriteDao
 import com.kartik.myapplication.data.local.dao.ProductDao
 import com.kartik.myapplication.data.local.database.AppDatabase
 import dagger.Module
@@ -29,5 +30,10 @@ object DatabaseModule {
     @Provides
     fun provideDao(db: AppDatabase): ProductDao {
         return db.productDao()
+    }
+
+    @Provides
+    fun provideFavoriteDao(db: AppDatabase): FavoriteDao {
+        return db.favoriteDao()
     }
 }
