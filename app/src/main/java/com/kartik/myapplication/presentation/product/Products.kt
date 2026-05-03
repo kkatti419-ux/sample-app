@@ -8,6 +8,7 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
@@ -81,33 +82,61 @@ fun Products(navController: NavController,viewModel: ProductViewModel= hiltViewM
 }
 
 
+//@Composable
+//fun ProductCard(modifier: Modifier = Modifier,product: Product) {
+//
+//    Box(modifier.padding(5.dp).fillMaxWidth().background(color = Color.Gray)) {
+//        Column {
+//            AsyncImage(
+//                model = null,
+//                contentDescription = null,
+//                contentScale = ContentScale.Crop,
+//                modifier = Modifier.fillMaxSize()
+//            )
+//            Image(
+//                painter = painterResource(id = R.drawable.ic_email),
+//                contentDescription = null,
+//                contentScale = ContentScale.Crop,
+//                modifier = Modifier.fillMaxSize()
+//            )
+////            Image(painterResource(R.drawable.ic_launcher_background,contentDescription = null),contentScale = ContentScale.Crop)
+//            InfoText("title", product.title)
+////            InfoText("Description", "The Essence Mascara Lash Princess is a popular mascara known for its volumizing and lengthening effects. Achieve dramatic lashes with this long-lasting and cruelty-free formula.")
+//            InfoText("Category", "Beauty")
+//            InfoText("email", "kartik@gmail.com")
+//            InfoText("Price", "Pickle")
+////            InfoText("Description", "The Essence Mascara Lash Princess is a popular mascara known for its volumizing and lengthening effects. Achieve dramatic lashes with this long-lasting and cruelty-free formula.")
+//            InfoText("Category", "Beauty")
+//            InfoText("email", "kartik@gmail.com")
+//
+//        }
+//    }
+//}
+
+
 @Composable
-fun ProductCard(modifier: Modifier = Modifier,product: Product) {
+fun ProductCard(product: Product) {
 
-    Box(modifier.padding(5.dp).fillMaxWidth().background(color = Color.Gray)) {
+    Box(
+        Modifier
+            .padding(5.dp)
+            .fillMaxWidth()
+            .background(Color.LightGray)
+    ) {
         Column {
-            AsyncImage(
-                model = null,
-                contentDescription = null,
-                contentScale = ContentScale.Crop,
-                modifier = Modifier.fillMaxSize()
-            )
-            Image(
-                painter = painterResource(id = R.drawable.ic_email),
-                contentDescription = null,
-                contentScale = ContentScale.Crop,
-                modifier = Modifier.fillMaxSize()
-            )
-//            Image(painterResource(R.drawable.ic_launcher_background,contentDescription = null),contentScale = ContentScale.Crop)
-            InfoText("title", product.title)
-//            InfoText("Description", "The Essence Mascara Lash Princess is a popular mascara known for its volumizing and lengthening effects. Achieve dramatic lashes with this long-lasting and cruelty-free formula.")
-            InfoText("Category", "Beauty")
-            InfoText("email", "kartik@gmail.com")
-            InfoText("Price", "Pickle")
-//            InfoText("Description", "The Essence Mascara Lash Princess is a popular mascara known for its volumizing and lengthening effects. Achieve dramatic lashes with this long-lasting and cruelty-free formula.")
-            InfoText("Category", "Beauty")
-            InfoText("email", "kartik@gmail.com")
 
+            AsyncImage(
+                model = product.thumbnail,
+                contentDescription = product.title,
+                contentScale = ContentScale.Crop,
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .height(150.dp)
+            )
+
+            InfoText("Title", product.title)
+            InfoText("Price", "₹${product.price}")
+            InfoText("Rating", product.rating.toString())
         }
     }
 }

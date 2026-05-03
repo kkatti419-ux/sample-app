@@ -1,6 +1,7 @@
 package com.kartik.myapplication.presentation.product
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
@@ -22,7 +23,7 @@ import com.kartik.myapplication.presentation.profile.InfoText
 
 @Composable
 fun ProductDetails(product: Product? = null) {
-    val data = product ?: Product(
+    val p = product ?: Product(
         id = 1,
         title = "Demo Product",
         description = "Demo description",
@@ -47,7 +48,6 @@ fun ProductDetails(product: Product? = null) {
         thumbnail = ""
     )
 
-
     LazyColumn(
         modifier = Modifier.fillMaxSize(),
         contentPadding = PaddingValues(16.dp),
@@ -56,79 +56,87 @@ fun ProductDetails(product: Product? = null) {
 
         // 🔹 Image
         item {
-            AsyncImage(
-                model = product?.thumbnail,
-                contentDescription = product?.title,
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .height(200.dp),
-                contentScale = ContentScale.Crop
-            )
+            val thumb = p.thumbnail.takeIf { it.isNotBlank() }
+            if (thumb != null) {
+                AsyncImage(
+                    model = thumb,
+                    contentDescription = p.title,
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .height(200.dp),
+                    contentScale = ContentScale.Crop
+                )
+            } else {
+                Spacer(Modifier.height(200.dp))
+            }
         }
 
         // 🔹 Basic Info
         item {
-            InfoText("Title", product?.title ?: "")
-            InfoText("Description", product?.description ?: "")
-            InfoText("Category", product?.category ?: "")
-            InfoText("Price", "₹${product?.price}")
-            InfoText("Discount", "${product?.discountPercentage}%")
-            InfoText("Rating", product?.rating.toString())
-            InfoText("Stock", product?.stock.toString())
+            InfoText("Title", p.title)
+            InfoText("Description", p.description)
+            InfoText("Category", p.category)
+            InfoText("Price", "₹${p.price}")
+            InfoText("Discount", "${p.discountPercentage}%")
+            InfoText("Rating", p.rating.toString())
+            InfoText("Stock", p.stock.toString())
         }
 
         // 🔹 Tags
         item {
-            InfoText("Tags", product?.tags?.joinToString() ?: "")
+            InfoText("Tags", p.tags.joinToString())
         }
 
         // 🔹 Brand & SKU
         item {
-            InfoText("Brand", product?.brand ?:"" )
-            InfoText("SKU", product?.sku ?: "")
-            InfoText("Weight", "${product?.weight}g")
+            InfoText("Brand", p.brand)
+            InfoText("SKU", p.sku)
+            InfoText("Weight", "${p.weight}g")
         }
 
         // 🔹 Dimensions
         item {
-            InfoText("Width", product?.dimensions?.width.toString())
-            InfoText("Height", product?.dimensions?.height.toString())
-            InfoText("Depth", product?.dimensions?.depth.toString())
+            InfoText("Width", p.dimensions.width.toString())
+            InfoText("Height", p.dimensions.height.toString())
+            InfoText("Depth", p.dimensions.depth.toString())
         }
 
         // 🔹 Shipping & Warranty
         item {
-            InfoText("Warranty", product?.warrantyInformation ?:"" )
-            InfoText("Shipping", product?.shippingInformation ?: "")
-            InfoText("Availability", product?.availabilityStatus ?: "")
+            InfoText("Warranty", p.warrantyInformation)
+            InfoText("Shipping", p.shippingInformation)
+            InfoText("Availability", p.availabilityStatus)
         }
 
         // 🔹 Policies
         item {
-            InfoText("Return Policy", product?.returnPolicy ?:"" )
-            InfoText("Minimum Order Qty", product?.minimumOrderQuantity.toString())
+            InfoText("Return Policy", p.returnPolicy)
+            InfoText("Minimum Order Qty", p.minimumOrderQuantity.toString())
         }
 
         // 🔹 Meta
         item {
-            InfoText("Created At", product?.meta?.createdAt ?: "")
-            InfoText("Updated At", product?.meta?.updatedAt ?: "")
-            InfoText("Barcode", product?.meta?.barcode ?: "")
+            InfoText("Created At", p.meta.createdAt)
+            InfoText("Updated At", p.meta.updatedAt)
+            InfoText("Barcode", p.meta.barcode)
         }
 
         // 🔹 QR Code
         item {
-            AsyncImage(
-                model = product?.meta?.qrCode,
-                contentDescription = "QR Code",
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .height(150.dp)
-            )
+            val qr = p.meta.qrCode.takeIf { it.isNotBlank() }
+            if (qr != null) {
+                AsyncImage(
+                    model = qr,
+                    contentDescription = "QR Code",
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .height(150.dp)
+                )
+            }
         }
 
         // 🔹 Images list
-        items(product?.images ?: emptyList()) { image ->
+        items(p.images.filter { it.isNotBlank() }) { image ->
             AsyncImage(
                 model = image,
                 contentDescription = "Product Image",
@@ -143,7 +151,7 @@ fun ProductDetails(product: Product? = null) {
             Text("Reviews", style = MaterialTheme.typography.titleMedium)
         }
 
-        items(product?.reviews ?: emptyList()) { review ->
+        items(p.reviews) { review ->
             Column(
                 modifier = Modifier
                     .fillMaxWidth()
