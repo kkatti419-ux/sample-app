@@ -41,6 +41,7 @@ fun BottomBar(navController: NavController) {
                         Screen.Home -> Icon(Icons.Default.Home, contentDescription = null)
                         Screen.Profile -> Icon(Icons.Default.Person, contentDescription = null)
                         Screen.Setting -> Icon(Icons.Default.Person, contentDescription = null)
+                        Screen.ProductDetail -> Icon(Icons.Default.Person, contentDescription = null)
                     }
                 },
                 label = {

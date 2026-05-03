@@ -1,6 +1,7 @@
 package com.kartik.myapplication.presentation.product
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -23,6 +24,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import coil.compose.AsyncImage
 import com.kartik.myapplication.domain.model.Product
+import com.kartik.myapplication.presentation.navigation.Screen
 
 @Composable
 fun Products(navController: NavController,viewModel: ProductViewModel= hiltViewModel()) {
@@ -60,8 +62,12 @@ fun Products(navController: NavController,viewModel: ProductViewModel= hiltViewM
 
             ) {
                 items(uiState.data.products) { item ->
-                    ProductCard(product = item)
-//            InfoText(item.first, item.second)
+                    ProductCard(
+                        product = item,
+                        onClick = {
+                            navController.navigate(Screen.ProductDetail.createRoute(item.id))
+                        },
+                    )
                 }
             }
 //            ProductGrid(products = uiState.data.products,navController)
@@ -109,13 +115,14 @@ fun Products(navController: NavController,viewModel: ProductViewModel= hiltViewM
 
 
 @Composable
-fun ProductCard(product: Product) {
+fun ProductCard(product: Product, onClick: () -> Unit) {
 
     Box(
         Modifier
             .padding(5.dp)
             .fillMaxWidth()
             .background(Color.LightGray)
+            .clickable(onClick = onClick),
     ) {
         Column {
 
