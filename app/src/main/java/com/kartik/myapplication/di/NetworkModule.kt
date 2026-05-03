@@ -1,6 +1,6 @@
 package com.kartik.myapplication.di
 
-import com.kartik.myapplication.data.api.ApiService
+import com.kartik.myapplication.data.remote.api.ApiService
 import com.squareup.moshi.Moshi
 import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
 import dagger.Module

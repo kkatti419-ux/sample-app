@@ -1,4 +1,4 @@
-package com.kartik.myapplication.data.model.product
+package com.kartik.myapplication.data.remote.model.product
 
 data class ProductResponseDto(
     val products: List<ProductDto>,

@@ -1,4 +1,4 @@
-package com.kartik.myapplication.data.model.product
+package com.kartik.myapplication.data.remote.model.product
 import com.squareup.moshi.JsonClass
 
 @JsonClass(generateAdapter = true)

@@ -1,6 +1,6 @@
 package com.kartik.myapplication.di
 
-import com.kartik.myapplication.data.repositoryimpl.ProductRepositoryImpl
+import com.kartik.myapplication.data.repository.ProductRepositoryImpl
 import com.kartik.myapplication.domain.repository.ProductRepository
 import dagger.Binds
 import dagger.Module

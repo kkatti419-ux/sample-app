@@ -1,4 +1,4 @@
-package com.kartik.myapplication.data.model.product
+package com.kartik.myapplication.data.remote.model.product
 
 data class MetaDto(
     val createdAt: String,
